@@ -15,14 +15,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController username_email_login_controller = TextEditingController();
   void RecoverPasswordPage() {}
   void RegisterNav() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => RegisterPage()));
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final FocusNode email_login_focusNode = FocusNode();
+
+    void login() {}
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       body: SingleChildScrollView(
@@ -31,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Text logo
-        
+
               Text(
                 'Sign in to Y',
                 style: TextStyle(
@@ -70,18 +76,17 @@ class _LoginPageState extends State<LoginPage> {
                               'Jim Cock wants me to pay for a membership to the Apple Developer Program and since im a brokie now, we currently do not support this feature')));
                     }),
               ),
-        
+
               const SizedBox(
                 height: 10,
               ),
-        
+
               Container(
                 width: 400,
                 child: Row(
                   children: [
                     Expanded(
                       child: Container(
-                       
                         margin: const EdgeInsets.only(right: 12.0),
                         child: Divider(
                           color: Theme.of(context).colorScheme.primary,
@@ -107,22 +112,30 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-        
+
               const SizedBox(
                 height: 10,
               ),
               // phone email or username
-              const MyTextfield(
-                  hintText: 'Phone, email, or username', obsecure: false),
-        
-              NextButton(),
+              MyTextfield(
+                hintText: 'Phone, email, or username',
+                obsecure: false,
+                controller: username_email_login_controller,
+                focusNode: email_login_focusNode,
+              ),
+
+              NextButton(
+                onTap: () {
+                  login();
+                },
+              ),
               // NEXT
               const SizedBox(
                 height: 10,
               ),
               // fFORGET PASSWORD
               ForgotPassword(),
-        
+
               const SizedBox(
                 height: 15,
               ),

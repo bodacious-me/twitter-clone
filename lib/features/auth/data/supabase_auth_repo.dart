@@ -32,13 +32,18 @@ class SupabaseAuthRepo implements AuthRepo {
   }
 
   @override
-  Future<AppUser?> SignUp(String email, String username, String password, String? profileImageUrl) async {
+  Future<AppUser?> SignUp(String email, String username, String password,
+      String? profileImageUrl, String? dateOfBirth) async {
     try {
-      final response =
-          await _supabase.auth.signUp(password: password, email: email);
-      final currentUser = await _supabase.auth.currentUser;
-      if (currentUser != null) {
-        return AppUser(email: email, profileImageUrl: profileImageUrl ?? '', username: username);
+      await _supabase.auth.signUp(password: password, email: email);
+      final currentUser = _supabase.auth.currentUser;
+      print(currentUser!.email);
+      if (currentUser.email!.isNotEmpty) {
+        return AppUser(
+            email: email,
+            profileImageUrl: profileImageUrl ?? '',
+            username: username,
+            dateOfBirth: dateOfBirth);
       } else {
         return null;
       }
@@ -59,13 +64,15 @@ class SupabaseAuthRepo implements AuthRepo {
       final user = Supabase.instance.client.auth.currentUser;
       if (user != null) {
         AppUser returnUser = AppUser(
-            email: user.userMetadata!['email'],
-            profileImageUrl: user.userMetadata!['avatar_url'],
-            username: user.userMetadata!['full_name']);
+            dateOfBirth: 'adzio',
+            email: user.email??'hamawmin',
+            profileImageUrl: '',
+            username: 'adad');
         return returnUser;
-      } else {
-        return null;
       }
+      // } else {
+      //   return null;
+      // }
     } catch (e) {
       throw Exception('Cannot get user ${e}');
     }

@@ -43,6 +43,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   datepicker_dropdown: ^0.1.6
   time_picker_spinner_pop_up: ^2.0.0
+  equatable: ^2.0.7
 
 
   

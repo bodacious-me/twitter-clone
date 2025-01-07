@@ -12,18 +12,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   @override
   Widget build(BuildContext context) {
   
     return Scaffold(
       appBar: AppBar(
-        title: Text('killed that motherfucker!!   ${widget.user!.email}'),
+        title: Text('killed that motherfucker!! ${widget.user!.email}'),
         leading: ElevatedButton(
             onPressed: () {
               final authCubit = context.read<AuthCubit>();
               authCubit.Logout();
             },
-            child: Icon(Icons.logout)),
+            child: const Icon(Icons.logout)),
       ),
     );
   }

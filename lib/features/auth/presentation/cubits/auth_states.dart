@@ -8,7 +8,7 @@ class AuthLoading implements AuthStates{}
 
 class Authenticated implements AuthStates{
   final AppUser user;
-  Authenticated({required this.user});
+  Authenticated(this.user);
 }
 
 class UnAuthenticated implements AuthStates{}

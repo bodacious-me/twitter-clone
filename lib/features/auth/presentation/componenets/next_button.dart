@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+  final VoidCallback onTap;
+  const NextButton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class NextButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // Handle button press
-          print('Button pressed!');
+          onTap();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).colorScheme.onSurface,

@@ -16,37 +16,35 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-            create: (context) =>
-                AuthCubit(authRepo: authRepo)..checkAuth()),
+            create: (context) => AuthCubit(authRepo: authRepo)..checkAuth()),
       ],
       child: MaterialApp(
+        key: const ValueKey('MateialApp'),
           theme: darkmode,
           debugShowCheckedModeBanner: false,
-          home: BlocConsumer<AuthCubit, AuthStates>(
-              builder: (context, authState) {
-            print(authState);
-            if (authState is UnAuthenticated) {
-              return const RegisterPage();
-            }
-            else if(authState is Authenticated){
-              return HomePage(user: authState.user,);
-            }
-             else {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          }, listener: (context, state) {
-            if (state is AuthError) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.errorMessage)));
-            }
+          home: Builder(builder: (context) {
+            return BlocConsumer<AuthCubit, AuthStates>(
+                builder: (context, authState) {
+              print(authState);
+              if (authState is UnAuthenticated) {
+                return const RegisterPage();
+              } else if (authState is Authenticated) {
+                return HomePage(user: authState.user);
+              } else {
+                return const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            }, listener: (context, state) {
+              if (state is AuthError) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+              }
+            });
           })),
     );
   }
 }
 
-
-// https://mbkjaazwdgdssyhjtvit.supabase.co/auth/v1/callback

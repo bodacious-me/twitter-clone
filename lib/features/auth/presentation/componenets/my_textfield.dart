@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 class MyTextfield extends StatefulWidget {
   final bool obsecure;
   final String hintText;
-
+  final TextEditingController controller;
+  final FocusNode focusNode;
   const MyTextfield(
-      {super.key, required this.hintText, required this.obsecure});
+      {super.key,
+      required this.hintText,
+      required this.obsecure,
+      required this.controller,
+      required this.focusNode});
 
   @override
   State<MyTextfield> createState() => _MyTextfieldState();
@@ -18,6 +23,8 @@ class _MyTextfieldState extends State<MyTextfield> {
       width: 400,
       height: 100,
       child: TextField(
+        focusNode: widget.focusNode,
+        controller: widget.controller,
         obscureText: widget.obsecure,
         decoration: InputDecoration(
           labelText: widget.hintText,
