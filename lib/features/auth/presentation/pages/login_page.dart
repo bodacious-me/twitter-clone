@@ -3,7 +3,8 @@ import 'package:twitterapp/features/auth/presentation/componenets/forgot_passwor
 import 'package:twitterapp/features/auth/presentation/componenets/my_textfield.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/next_button.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_cubit.dart';
+import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
+import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
 import 'package:twitterapp/features/auth/presentation/pages/register_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,13 +16,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController username_email_login_controller = TextEditingController();
+  final TextEditingController username_email_login_controller =
+      TextEditingController();
   void RecoverPasswordPage() {}
   void RegisterNav() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => RegisterPage()));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,8 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -56,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
                     buttonType: ButtonType.google,
                     buttonSize: ButtonSize.large,
                     onPressed: () {
-                      final authCubit = context.read<AuthCubit>();
-                      authCubit.SignUpWithGoogle();
+                      final authCubit =
+                          context.read<AuthBloc>().add(SignUpWithGoogleEvent());
                     }),
               ),
               const SizedBox(
@@ -71,9 +72,9 @@ class _LoginPageState extends State<LoginPage> {
                     buttonType: ButtonType.apple,
                     buttonSize: ButtonSize.large,
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text(
-                              'Jim Cock wants me to pay for a membership to the Apple Developer Program and since im a brokie now, we currently do not support this feature')));
+                      final authCubit = context
+                          .read<AuthBloc>()
+                          .add(SignUpWithAppleEvent(context));
                     }),
               ),
 

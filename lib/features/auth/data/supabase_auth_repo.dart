@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:twitterapp/features/auth/domain/entites/user.dart';
@@ -20,8 +21,10 @@ class SupabaseAuthRepo implements AuthRepo {
   }
 
   @override
-  Future<AppUser?> SignInWithApple() {
-    // TODO: implement SignInWithGoogle
+  Future<void> SignInWithApple(BuildContext context) {
+ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                              'Jim Cock wants me to pay for a membership to the Apple Developer Program and since im a brokie now, we currently do not support this feature')));
     throw UnimplementedError();
   }
 
@@ -53,9 +56,12 @@ class SupabaseAuthRepo implements AuthRepo {
   }
 
   @override
-  Future<void> Logout() {
-    // TODO: implement Logout
-    throw UnimplementedError();
+  Future<void> Logout() async {
+    try {
+      await Supabase.instance.client.auth.signOut();
+    } catch (e) {
+      throw Exception('Error logging out ${e}');
+    }
   }
 
   @override
@@ -65,7 +71,7 @@ class SupabaseAuthRepo implements AuthRepo {
       if (user != null) {
         AppUser returnUser = AppUser(
             dateOfBirth: 'adzio',
-            email: user.email??'hamawmin',
+            email: user.email ?? 'hamawmin',
             profileImageUrl: '',
             username: 'adad');
         return returnUser;
