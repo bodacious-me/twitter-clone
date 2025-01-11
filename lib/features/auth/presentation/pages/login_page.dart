@@ -5,6 +5,8 @@ import 'package:sign_button/sign_button.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/next_button.dart';
 import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
 import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
+import 'package:twitterapp/features/auth/presentation/pages/enter_password.dart';
+import 'package:twitterapp/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:twitterapp/features/auth/presentation/pages/register_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +30,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final FocusNode email_login_focusNode = FocusNode();
 
-    void login() {}
+    void login() {
+      print(username_email_login_controller.text);
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EnterPasswordPage(email_username: username_email_login_controller.text)));
+    }
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
@@ -127,7 +132,11 @@ class _LoginPageState extends State<LoginPage> {
 
               NextButton(
                 onTap: () {
+                  if(username_email_login_controller.text.isNotEmpty)
                   login();
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please Enter an Email')));
+                  }
                 },
               ),
               // NEXT
@@ -135,7 +144,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 10,
               ),
               // fFORGET PASSWORD
-              ForgotPassword(),
+              ForgotPassword(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ForgotPasswordPage()));
+                },
+              ),
 
               const SizedBox(
                 height: 15,

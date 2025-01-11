@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:twitterapp/features/auth/presentation/pages/login_page.dart';
 
-class ForgotPassword extends StatelessWidget {
+class SendLinkButton extends StatefulWidget {
   final VoidCallback onTap;
-  const ForgotPassword({super.key, required this.onTap});
+  const SendLinkButton({super.key, required this.onTap});
 
   @override
+  State<SendLinkButton> createState() => _SendLinkButtonState();
+}
+
+class _SendLinkButtonState extends State<SendLinkButton> {
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
+        return SizedBox(
       height: 50,
       width: 400,
       child: ElevatedButton(
-        onPressed: () {
-          // Handle button press
-          print('Button pressed!');
-          onTap();
+        onPressed: () async{
+          widget.onTap();
+          
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: Theme.of(context).colorScheme.onSurface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(22),
             
@@ -24,9 +29,9 @@ class ForgotPassword extends StatelessWidget {
           padding: EdgeInsets.all(20), // Padding
         ),
         child: Text(
-          'Forgot password?',
+          'Send Link',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Theme.of(context).colorScheme.surface,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),

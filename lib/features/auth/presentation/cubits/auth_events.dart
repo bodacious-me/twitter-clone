@@ -12,7 +12,11 @@ class SignUpEvent extends AuthEvents {
       this.profileImageUrl);
 }
 
-class LoginEvent extends AuthEvents {}
+class LoginEvent extends AuthEvents {
+  final String email;
+  final String password;
+  LoginEvent(this.email, this.password);
+}
 
 class SignUpWithGoogleEvent extends AuthEvents {}
 
@@ -25,3 +29,8 @@ class SignUpWithAppleEvent extends AuthEvents {
 class LogoutEvent extends AuthEvents {}
 
 class CheckAuthEvent extends AuthEvents{}
+
+class ResetPasswordEvent extends AuthEvents{
+  final String email;
+  ResetPasswordEvent(this.email);
+}

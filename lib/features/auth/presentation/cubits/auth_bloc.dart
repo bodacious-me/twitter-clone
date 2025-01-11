@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitterapp/features/auth/domain/entites/user.dart';
 import 'package:twitterapp/features/auth/domain/repository/auth_repo.dart';
@@ -6,16 +7,14 @@ import 'package:twitterapp/features/auth/presentation/cubits/auth_states.dart';
 
 class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   final AuthRepo authRepo;
-  AppUser? _currentUser;
 
   AuthBloc({required this.authRepo}) : super(AuthInitial()) {
     on<SignUpWithGoogleEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        final user = await authRepo.SignInWithGoogle();
-        if (user != null) {
-          _currentUser = user;
-          emit(Authenticated(user));
+        final currentUser = await authRepo.SignInWithGoogle();
+        if (currentUser != null) {
+          emit(Authenticated(currentUser));
         } else {
           emit(UnAuthenticated());
         }
@@ -25,27 +24,29 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     });
 
     on<SignUpEvent>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        if (event.email.isNotEmpty &&
-            event.name.isNotEmpty &&
-            event.password.isNotEmpty &&
-            event.dateOfBirth != null) {
-          final user = await authRepo.SignUp(event.email, event.name,
-              event.password, event.profileImageUrl, event.dateOfBirth);
-          _currentUser = user;
-          if (user != null && user.email.isNotEmpty) {
-            emit(Authenticated(user));
-          } else {
-            emit(UnAuthenticated());
-          }
-        } else {
-          emit(AuthError(errorMessage: 'Please fill out the credentials'));
+      if (event.email.isNotEmpty &&
+          event.name.isNotEmpty &&
+          event.password.isNotEmpty &&
+          event.dateOfBirth != null) {
+        try {
+          emit(AuthLoading());
+
+          await authRepo.SignUp(event.email, event.name, event.password,
+              event.profileImageUrl, event.dateOfBirth);
+          final currentUser = await authRepo.getCurrentUser();
+          print('here : ${currentUser!.email}');
+          emit(Authenticated(AppUser(
+              dateOfBirth: event.dateOfBirth,
+              email: event.email,
+              username: event.name,
+              profileImageUrl: event.profileImageUrl)));
+
+          //emit(AuthLoading());
+        } catch (e) {
+          emit(AuthError(errorMessage: 'Error during signup: ${e}'));
         }
-      } catch (e) {
-        emit(AuthError(
-            errorMessage:
-                'Error during signup: ${e}')); // More descriptive error
+      } else {
+        emit(AuthError(errorMessage: 'Please provide the credentials'));
       }
     });
 
@@ -66,8 +67,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     on<SignUpWithAppleEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        await authRepo.SignInWithApple(
-            event.context); // await and handle the result
+        await authRepo.SignInWithApple(event.context);
       } catch (e) {
         emit(AuthError(errorMessage: e.toString()));
       }
@@ -76,23 +76,38 @@ class AuthBloc extends Bloc<AuthEvents, AuthStates> {
     on<LogoutEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        await authRepo.Logout(); // Call logout on your repo
+        await authRepo.Logout();
         emit(UnAuthenticated());
       } catch (e) {
-        emit(AuthError(
-            errorMessage: 'Logout error: ${e}')); // Handle logout errors
+        emit(AuthError(errorMessage: 'Logout error: ${e}'));
       }
     });
 
-    on<LoginEvent>((event, emit)async {
-      // emit(AuthLoading());
+    on<LoginEvent>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        final user = await authRepo.LogIn(event.email, event.password);
+        final logedInUser = await authRepo.getCurrentUser();
+        if (logedInUser != null) {
+          emit(Authenticated(logedInUser));
+        } else {
+          emit(AuthError(errorMessage: 'Something went wrong'));
+        }
+      } catch (e) {
+        emit(AuthError(errorMessage: e.toString()));
+      }
+    });
+
+    on<ResetPasswordEvent>((event, emit) async {
+      emit(AuthLoading());
       // try {
-      //   aw
+      //   await authRepo.resetPassword(event.email);
       // } catch (e) {
       //   emit(AuthError(errorMessage: e.toString()));
       // }
+      emit(AuthError(errorMessage: 'I could not afford a SMTP service so you should get yourself another account LOL'));
     });
+
     add(CheckAuthEvent());
   }
-  AppUser? get currentUser => _currentUser;
 }

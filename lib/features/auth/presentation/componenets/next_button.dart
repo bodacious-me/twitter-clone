@@ -23,7 +23,7 @@ class NextButton extends StatelessWidget {
           padding: EdgeInsets.all(20), // Padding
         ),
         child: Text(
-          'Next',
+          'Signup',
           style: TextStyle(
             color: Theme.of(context).colorScheme.surface,
             fontSize: 20,

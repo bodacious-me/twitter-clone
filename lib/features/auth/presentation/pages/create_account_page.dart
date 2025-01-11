@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/days_years_months.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/my_textfield.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/next_button.dart';
+
 import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
 import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
 
@@ -39,12 +40,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       dateOfBirth = null;
     }
     try {
-      final authCubit = context.read<AuthBloc>().add(SignUpEvent(
-          email_controller.text,
-          name_controller.text,
-          password_controller.text,
-          profileImageUrl_controller,
-          dateOfBirth));
+      // final authBloc = context.read<AuthBloc>().add(SignUpEvent(
+      //     email_controller.text,
+      //     name_controller.text,
+      //     password_controller.text,
+      //     profileImageUrl_controller,
+      //     dateOfBirth));
+      final authBloc = context.read<AuthBloc>().add(SignUpEvent(email_controller.text, dateOfBirth, name_controller.text, password_controller.text, profileImageUrl_controller));
     } catch (e) {
       throw Exception('error in signup method in createAcount PAGE: ${e}');
     }

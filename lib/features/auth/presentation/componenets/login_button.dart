@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
-class ForgotPassword extends StatelessWidget {
+class LoginButton extends StatefulWidget {
   final VoidCallback onTap;
-  const ForgotPassword({super.key, required this.onTap});
+   LoginButton({super.key, required this.onTap});
 
   @override
+  State<LoginButton> createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<LoginButton> {
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
+      return SizedBox(
       height: 50,
       width: 400,
       child: ElevatedButton(
         onPressed: () {
           // Handle button press
-          print('Button pressed!');
-          onTap();
+          widget.onTap();
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: Theme.of(context).colorScheme.onSurface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(22),
             
@@ -24,9 +28,9 @@ class ForgotPassword extends StatelessWidget {
           padding: EdgeInsets.all(20), // Padding
         ),
         child: Text(
-          'Forgot password?',
+          'Login',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Theme.of(context).colorScheme.surface,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),

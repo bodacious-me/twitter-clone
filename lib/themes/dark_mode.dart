@@ -7,5 +7,6 @@ ThemeData darkmode = ThemeData(
       surface: Color(0xFF121212),
       onSurface: Color(0xFFFFFFFF),
       tertiary: Color.fromARGB(255, 63, 59, 59),
+      onPrimary: Color.fromARGB(255, 26, 24, 24),
   ),
 );

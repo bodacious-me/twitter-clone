@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:twitterapp/features/auth/domain/entites/user.dart';
 import 'package:twitterapp/features/auth/domain/repository/auth_repo.dart';
+import 'package:twitterapp/features/auth/presentation/cubits/auth_states.dart';
 
 class SupabaseAuthRepo implements AuthRepo {
   final _supabase = Supabase.instance.client;
@@ -22,16 +23,21 @@ class SupabaseAuthRepo implements AuthRepo {
 
   @override
   Future<void> SignInWithApple(BuildContext context) {
-ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text(
-                              'Jim Cock wants me to pay for a membership to the Apple Developer Program and since im a brokie now, we currently do not support this feature')));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+            'Jim Cock wants me to pay for a membership to the Apple Developer Program and since im a brokie now, we currently do not support this feature')));
     throw UnimplementedError();
   }
 
   @override
-  Future<AppUser?> LogIn(String email, String password) {
-    // TODO: implement LogIn
-    throw UnimplementedError();
+  Future<void> LogIn(String email, String password) async {
+    try {
+      final user = await _supabase.auth
+          .signInWithPassword(password: password, email: email);
+          
+    } catch (e) {
+      throw Exception('Error Logging User in : ${e.toString()}');
+    }
   }
 
   @override
@@ -67,7 +73,7 @@ ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
   @override
   Future<AppUser?> getCurrentUser() async {
     try {
-      final user = Supabase.instance.client.auth.currentUser;
+      final user = _supabase.auth.currentUser;
       if (user != null) {
         AppUser returnUser = AppUser(
             dateOfBirth: 'adzio',
@@ -82,5 +88,14 @@ ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
     } catch (e) {
       throw Exception('Cannot get user ${e}');
     }
+  }
+  
+  @override
+  Future<void> resetPassword(String email)async {
+  try {
+   await _supabase.auth.resetPasswordForEmail(email);
+  } catch (e) {
+    throw Exception('Error Reseting password:${e.toString()}');
+  }
   }
 }
