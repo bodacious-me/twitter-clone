@@ -3,8 +3,8 @@ import 'package:twitterapp/features/auth/presentation/componenets/forgot_passwor
 import 'package:twitterapp/features/auth/presentation/componenets/my_textfield.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/next_button.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_events.dart';
 import 'package:twitterapp/features/auth/presentation/pages/enter_password.dart';
 import 'package:twitterapp/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:twitterapp/features/auth/presentation/pages/register_page.dart';

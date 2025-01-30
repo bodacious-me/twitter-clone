@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/createAccount_button.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_events.dart';
 import 'package:twitterapp/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

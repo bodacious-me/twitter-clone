@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twitterapp/features/auth/domain/entites/user.dart';
 import 'package:twitterapp/features/auth/domain/repository/auth_repo.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_states.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_events.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_states.dart';
 
 class AuthBloc extends Bloc<AuthEvents, AuthStates> {
   final AuthRepo authRepo;

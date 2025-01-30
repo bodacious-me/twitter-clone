@@ -4,8 +4,8 @@ import 'package:twitterapp/features/auth/presentation/componenets/days_years_mon
 import 'package:twitterapp/features/auth/presentation/componenets/my_textfield.dart';
 import 'package:twitterapp/features/auth/presentation/componenets/next_button.dart';
 
-import 'package:twitterapp/features/auth/presentation/cubits/auth_bloc.dart';
-import 'package:twitterapp/features/auth/presentation/cubits/auth_events.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:twitterapp/features/auth/presentation/bloc/auth_events.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
